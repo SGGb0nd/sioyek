@@ -25,14 +25,14 @@ make -j$MAKE_PARALLEL
 
 rm -rf build 2> /dev/null
 mkdir build
-mv sioyek.app build/
-cp -r pdf_viewer/shaders build/sioyek.app/Contents/MacOS/shaders
+mv sioyekNote.app build/
+cp -r pdf_viewer/shaders build/sioyekNote.app/Contents/MacOS/shaders
 
-cp pdf_viewer/prefs.config build/sioyek.app/Contents/MacOS/prefs.config
-cp pdf_viewer/prefs_user.config build/sioyek.app/Contents/MacOS/prefs_user.config
-cp pdf_viewer/keys.config build/sioyek.app/Contents/MacOS/keys.config
-cp pdf_viewer/keys_user.config build/sioyek.app/Contents/MacOS/keys_user.config
-cp tutorial.pdf build/sioyek.app/Contents/MacOS/tutorial.pdf
+cp pdf_viewer/prefs.config build/sioyekNote.app/Contents/MacOS/prefs.config
+cp pdf_viewer/prefs_user.config build/sioyekNote.app/Contents/MacOS/prefs_user.config
+cp pdf_viewer/keys.config build/sioyekNote.app/Contents/MacOS/keys.config
+cp pdf_viewer/keys_user.config build/sioyekNote.app/Contents/MacOS/keys_user.config
+cp tutorial.pdf build/sioyekNote.app/Contents/MacOS/tutorial.pdf
 
 # Capture the current PATH
 CURRENT_PATH=$(echo $PATH)
@@ -44,5 +44,5 @@ INFO_PLIST="resources/Info.plist"
 /usr/libexec/PlistBuddy -c "Add :LSEnvironment dict" "$INFO_PLIST" || echo "LSEnvironment already exists"
 /usr/libexec/PlistBuddy -c "Add :LSEnvironment:PATH string $CURRENT_PATH" "$INFO_PLIST" || /usr/libexec/PlistBuddy -c "Set :LSEnvironment:PATH $CURRENT_PATH" "$INFO_PLIST"
 
-macdeployqt build/sioyek.app -dmg
+macdeployqt build/sioyekNote.app -dmg
 zip -r sioyek-release-mac.zip build/sioyek.dmg

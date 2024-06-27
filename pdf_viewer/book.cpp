@@ -74,6 +74,30 @@ void Highlight::from_json(const QJsonObject& json_object)
 	type = static_cast<char>(json_object["type"].toInt());
 }
 
+QJsonObject Note::to_json() const
+{
+	QJsonObject res;
+	res["selection_begin_x"] = selection_begin.x;
+	res["selection_begin_y"] = selection_begin.y;
+	res["selection_end_x"] = selection_end.x;
+	res["selection_end_y"] = selection_end.y;
+	res["description"] = QString::fromStdWString(description);
+	res["type"] = type;
+	res["note_link"] = QString::fromStdWString(note_link);
+	return res;
+}
+
+void Note::from_json(const QJsonObject& json_object)
+{
+	selection_begin.x = json_object["selection_begin_x"].toDouble();
+	selection_begin.y = json_object["selection_begin_y"].toDouble();
+	selection_end.x = json_object["selection_end_x"].toDouble();
+	selection_end.y = json_object["selection_end_y"].toDouble();
+	description = json_object["description"].toString().toStdWString();
+	type = static_cast<char>(json_object["type"].toInt());
+	note_link = json_object["note_link"].toString().toStdWString();
+}
+
 QJsonObject Portal::to_json() const
 {
 	QJsonObject res;
@@ -112,6 +136,13 @@ bool operator==(const Highlight& lhs, const Highlight& rhs)
 {
 	return  (lhs.selection_begin.x == rhs.selection_begin.x) && (lhs.selection_end.x == rhs.selection_end.x) && 
 		  (lhs.selection_begin.y == rhs.selection_begin.y) && (lhs.selection_end.y == rhs.selection_end.y) ;
+}
+
+bool operator==(const Note& lhs, const Note& rhs)
+{
+	return  (lhs.selection_begin.x == rhs.selection_begin.x) && (lhs.selection_end.x == rhs.selection_end.x) &&
+		(lhs.selection_begin.y == rhs.selection_begin.y) && (lhs.selection_end.y == rhs.selection_end.y) &&
+		(lhs.description == rhs.description) && (lhs.note_link == rhs.note_link);
 }
 
 bool operator==(const Portal& lhs, const Portal& rhs)
